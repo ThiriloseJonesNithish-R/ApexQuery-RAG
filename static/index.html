@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexQuery - AI Document Q&A</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-brain-circuit brain-icon"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">ApexQuery</h1>
+                    <p class="brand-subtitle">AI Document Insights</p>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <h3 class="section-title">Upload Documents</h3>
+                <div class="drag-drop-zone" id="drop-zone">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <p class="upload-text">Drag & Drop files here</p>
+                    <p class="upload-subtext">Supports PDF, DOCX, TXT</p>
+                    <input type="file" id="file-input" multiple accept=".pdf,.docx,.txt" style="display: none;">
+                    <button class="btn btn-secondary btn-sm" id="browse-btn">Browse Files</button>
+                </div>
+            </div>
+
+            <!-- Loaded Files List -->
+            <div class="files-section">
+                <div class="section-header">
+                    <h3 class="section-title">Active Documents</h3>
+                    <span class="file-count-badge" id="file-count">0</span>
+                </div>
+                <div class="file-list" id="file-list">
+                    <div class="no-files-placeholder">
+                        <i class="fa-regular fa-file-excel placeholder-icon"></i>
+                        <p>No documents uploaded yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Controls -->
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-block" id="clear-btn">
+                    <i class="fa-solid fa-trash-can"></i> Clear All Data
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <!-- Chat Header -->
+            <header class="chat-header">
+                <div class="chat-title-info">
+                    <h2>Interactive Q&A Session</h2>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text" id="connection-status">Ready</span>
+                    </div>
+                </div>
+                <div class="model-badge">
+                    <i class="fa-solid fa-bolt model-icon"></i>
+                    <span>gemini-3.5-flash</span>
+                </div>
+            </header>
+
+            <!-- Chat History -->
+            <div class="chat-messages" id="chat-messages">
+                <!-- Welcome greeting when empty -->
+                <div class="welcome-card" id="welcome-card">
+                    <div class="welcome-icon-wrapper">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <h2>Welcome to ApexQuery!</h2>
+                    <p>Upload your research papers, contracts, technical specifications, or raw text documents to begin. The AI will extract and build a local knowledge context, allowing you to query details instantly.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fa-solid fa-file-pdf pdf-accent"></i>
+                            <h4>PDF Support</h4>
+                            <p>Extracts formatted text content page-by-page.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-file-word docx-accent"></i>
+                            <h4>Word Files</h4>
+                            <p>Reads paragraphs and tables from .docx files.</p>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-file-lines txt-accent"></i>
+                            <h4>Text Files</h4>
+                            <p>Parses UTF-8 plain text structures instantly.</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-examples">
+                        <h4>Try asking queries like:</h4>
+                        <div class="example-pills">
+                            <button class="example-pill">"Summarize the key points of the documents."</button>
+                            <button class="example-pill">"What are the main technical specifications listed?"</button>
+                            <button class="example-pill">"Are there any specific dates or figures mentioned?"</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <footer class="chat-footer">
+                <form id="chat-form" class="chat-form">
+                    <textarea 
+                        id="chat-input" 
+                        placeholder="Ask a question about your uploaded documents..." 
+                        rows="1" 
+                        required
+                        disabled
+                    ></textarea>
+                    <button type="submit" class="btn btn-primary" id="send-btn" disabled>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </footer>
+        </main>
+    </div>
+
+    <!-- JS Script -->
+    <script src="app.js"></script>
+</body>
+</html>

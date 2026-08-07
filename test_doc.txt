@@ -1,0 +1,21 @@
+Company Profile: Apex Innovations
+Founded: 2021
+CEO: Dr. Elena Rostova
+Headquarters: Seattle, Washington
+Employees: 142
+
+Mission Statement:
+"To accelerate the global transition to sustainable, intelligent automation through cutting-edge robotics and advanced AI solutions."
+
+Product Offerings:
+1. ApexBot V3: An autonomous warehouse retrieval robot equipped with LiDAR and computer vision.
+2. ApexBrain: A cloud-based fleet management platform that uses machine learning to optimize robot paths and battery usage.
+3. Sentinel Shield: An AI-driven facility security system that monitors video feeds and alerts staff of hazards.
+
+Key Customers:
+- Global Logistics Corp (uses 80 ApexBot V3 units)
+- SafeStore Warehouses (uses Sentinel Shield in all Western region warehouses)
+- PathFinder Deliveries (beta testing ApexBrain integration)
+
+Recent News (June 2026):
+Apex Innovations announced a breakthrough in solid-state battery technology, which will extend ApexBot V3 operational runtime by 45% starting in Q4 2026.
