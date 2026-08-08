@@ -2,14 +2,17 @@
 
 ApexQuery is a modern, responsive, document-based Q&A application that extracts text from multiple file types (PDF, Word `.docx`, and Text `.txt`) and processes interactive queries using the Gemini API. It features both a modern web-based single-page application dashboard and a lightweight command-line interface (CLI).
 
+![ApexQuery Dashboard](Screenshots/home_page.png)
+
 ---
 
 ## ✨ Features
 
-* **Multi-Format Parsing**:
-  * **PDF Documents**: Extract text page-by-page.
-  * **Word Files (`.docx`)**: Extract text from paragraphs and tabular columns.
+* **Multi-Format Parsing & Multimodal Support**:
+  * **PDF Documents**: Extract text page-by-page natively, or perform visual analysis for scanned/image-based documents.
+  * **Word Files (`.docx`)**: Extract text from paragraphs and tabular columns, and automatically extract embedded images.
   * **Text Files (`.txt`)**: Read plain UTF-8 raw text directly.
+  * **Images (`.png`, `.jpg`, `.jpeg`, `.webp`)**: Upload direct image assets for native OCR and visual analysis.
 * **Premium Web Dashboard**: A glassmorphic dark theme built using modern Vanilla CSS3 and HTML5.
 * **Real-Time Streaming**: Stream AI answers token-by-token directly into the browser using Server-Sent Events (SSE) and native JavaScript `ReadableStream`.
 * **Interactive File Management**: Drag-and-drop documents, manage files dynamically in a sidebar, and clear context easily.
@@ -39,6 +42,7 @@ ApexQuery is a modern, responsive, document-based Q&A application that extracts 
 │   ├── index.html        # Main dashboard UI
 │   ├── style.css         # Custom styling sheet (dark space glassmorphism theme)
 │   └── app.js            # Frontend JavaScript controller (upload & stream handlers)
+├── Screenshots/          # Project dashboard screenshots
 ├── main.py               # Command-line interface (CLI) entrypoint
 ├── web_app.py            # FastAPI backend server application
 ├── requirements.txt      # Project Python dependencies
@@ -56,8 +60,8 @@ ApexQuery is a modern, responsive, document-based Q&A application that extracts 
 
 ### 1. Clone & Navigate
 ```bash
-git clone https://github.com/ThiriloseJonesNithish-R/RAG-App.git
-cd RAG-App
+git clone https://github.com/ThiriloseJonesNithish-R/ApexQuery-RAG.git
+cd ApexQuery-RAG
 ```
 
 ### 2. Set Up Virtual Environment

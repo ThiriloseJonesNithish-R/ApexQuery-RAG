@@ -267,6 +267,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 let iconClass = 'fa-file-lines txt-icon';
                 if (ext === 'pdf') iconClass = 'fa-file-pdf pdf-icon';
                 else if (ext === 'docx' || ext === 'doc') iconClass = 'fa-file-word docx-icon';
+                else if (['png', 'jpg', 'jpeg', 'webp'].includes(ext)) iconClass = 'fa-file-image image-icon';
+                
+                // Construct beautiful metadata description
+                let metaText = `~${file.words} words`;
+                if (ext === 'pdf') {
+                    if (file.words === 0) {
+                        metaText = `${file.pages} page${file.pages > 1 ? 's' : ''} (Scanned/Visual)`;
+                    } else {
+                        metaText = `~${file.words} words (${file.pages} page${file.pages > 1 ? 's' : ''})`;
+                    }
+                } else if (['png', 'jpg', 'jpeg', 'webp'].includes(ext)) {
+                    metaText = `Visual Image`;
+                }
                 
                 const item = document.createElement('div');
                 item.className = 'file-item';
@@ -274,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i class="fa-solid ${iconClass} file-type-icon"></i>
                     <div class="file-details">
                         <div class="file-name" title="${file.name}">${file.name}</div>
-                        <div class="file-size">${file.size} • ~${file.words} words</div>
+                        <div class="file-size">${file.size} • ${metaText}</div>
                     </div>
                     <button class="delete-file-btn" onclick="deleteFile('${file.name.replace(/'/g, "\\'")}')">
                         <i class="fa-regular fa-trash-can"></i>
@@ -370,26 +383,41 @@ document.addEventListener('DOMContentLoaded', () => {
         // Replace bold/italic *text*
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
         
-        // Replace list elements
-        // This splits by newline, formatting individual lines that are bullet points
+        // Replace list elements and headers line by line
         const lines = html.split('\n');
         let inList = false;
         const processedLines = [];
         
         for (let line of lines) {
-            const listMatch = line.match(/^\s*[-*]\s+(.*)$/);
-            if (listMatch) {
-                if (!inList) {
-                    processedLines.push('<ul>');
-                    inList = true;
-                }
-                processedLines.push(`<li>${listMatch[1]}</li>`);
+            const trimmedLine = line.trim();
+            const h3Match = trimmedLine.match(/^###\s+(.*)$/);
+            const h2Match = trimmedLine.match(/^##\s+(.*)$/);
+            const h1Match = trimmedLine.match(/^#\s+(.*)$/);
+            
+            if (h3Match) {
+                if (inList) { processedLines.push('</ul>'); inList = false; }
+                processedLines.push(`<h3>${h3Match[1].trim()}</h3>`);
+            } else if (h2Match) {
+                if (inList) { processedLines.push('</ul>'); inList = false; }
+                processedLines.push(`<h2>${h2Match[1].trim()}</h2>`);
+            } else if (h1Match) {
+                if (inList) { processedLines.push('</ul>'); inList = false; }
+                processedLines.push(`<h1>${h1Match[1].trim()}</h1>`);
             } else {
-                if (inList) {
-                    processedLines.push('</ul>');
-                    inList = false;
+                const listMatch = line.match(/^\s*[-*]\s+(.*)$/);
+                if (listMatch) {
+                    if (!inList) {
+                        processedLines.push('<ul>');
+                        inList = true;
+                    }
+                    processedLines.push(`<li>${listMatch[1].trim()}</li>`);
+                } else {
+                    if (inList) {
+                        processedLines.push('</ul>');
+                        inList = false;
+                    }
+                    processedLines.push(line);
                 }
-                processedLines.push(line);
             }
         }
         if (inList) {
@@ -403,7 +431,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return paragraphs.map(p => {
             const trimmed = p.trim();
             if (!trimmed) return '';
-            if (trimmed.startsWith('<ul>') || trimmed.endsWith('</ul>')) return trimmed;
+            if (trimmed.startsWith('<ul>') || trimmed.endsWith('</ul>') || 
+                trimmed.startsWith('<h') || trimmed.endsWith('</h>')) {
+                return trimmed;
+            }
             return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
         }).join('');
     }
